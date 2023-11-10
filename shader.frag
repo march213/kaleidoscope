@@ -17,8 +17,12 @@ void main(void) {
     vec2 uv = v_texcoord;
     uv *= 2.0;
     uv += -1.0;
+
+    // make mouse position
+    vec2 mouse = u_mouse / u_resolution;
     
-    float radius = length(uv);
+    
+    float radius = length(uv) * mix(1.0, 2.0, mouse.x);
     float angle = atan(uv.y, uv.x);
     
     // get a segment
@@ -32,13 +36,15 @@ void main(void) {
         angle = 1.0 - fract(angle);
     }
     
-    angle += u_time;
+    angle += u_time * 0.2;
+    angle += mouse.y;
     
     // unsquash segments
     angle /= SEGMENTS;
     angle *= PI * 2.0;
     
     vec2 point = vec2(radius * cos(angle), radius * sin(angle));
+    point *= vec2(1.0, 0.666);
     point = fract(point);
     
     vec4 imageColor = texture2D(image, point);

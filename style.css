@@ -30,6 +30,8 @@ div.info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  user-select: none;
 }
 
 h1 {
